@@ -400,13 +400,16 @@ karto::LocalizedRangeScan* SlamToolbox::getLocalizedRangeScan(
   karto::Pose2 transformed_pose = smapper_->toKartoPose(tf_pose_transformed);
   
   geometry_msgs::PoseWithCovarianceStamped pose_msg;
-  pose_msg.header.frame_id = map_frame_;
+  pose_msg.header.frame_id = odom_frame_;
   pose_msg.header.stamp = ros::Time::now();
   pose_msg.pose.pose.position.x = karto_pose.GetX();
   pose_msg.pose.pose.position.y = karto_pose.GetY();
   tf2::Quaternion q_pose;
   q_pose.setRPY(0, 0, karto_pose.GetHeading());
   tf2::convert(q_pose, pose_msg.pose.pose.orientation);
+  pose_msg.pose.covariance[0]=0.1;
+  pose_msg.pose.covariance[7]=0.1;
+  pose_msg.pose.covariance[35]=0.5;
   sspose_.publish(pose_msg);
 
   // create localized range scan
