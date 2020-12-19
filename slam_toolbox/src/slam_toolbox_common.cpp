@@ -407,9 +407,9 @@ karto::LocalizedRangeScan* SlamToolbox::getLocalizedRangeScan(
   tf2::Quaternion q_pose;
   q_pose.setRPY(0, 0, karto_pose.GetHeading());
   tf2::convert(q_pose, pose_msg.pose.pose.orientation);
-  pose_msg.pose.covariance[0]=0.1;
-  pose_msg.pose.covariance[7]=0.1;
-  pose_msg.pose.covariance[35]=0.5;
+  pose_msg.pose.covariance[0]=0.01;
+  pose_msg.pose.covariance[7]=0.01;
+  pose_msg.pose.covariance[35]=0.05;
   sspose_.publish(pose_msg);
 
   // create localized range scan
